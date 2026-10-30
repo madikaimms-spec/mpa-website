@@ -241,6 +241,25 @@
   .contact-card .reg { margin-top: .5rem; font-size: .92rem; font-weight: 600; color: var(--maroon); }
   @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
 
+
+  /* Office bearers (read-only feed from the member portal) */
+  .bearers { background: var(--paper); }
+  .bearer-group { margin-top: 2.25rem; }
+  .bearer-group h3 { margin: 0 0 1rem; font-size: 1rem; font-weight: 600; color: var(--leaf); letter-spacing: .04em; text-transform: uppercase; }
+  .bearer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); gap: 1rem; }
+  .bearer { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .2rem; padding: 1.4rem 1rem 1.2rem; border: 1px solid var(--line); border-top: 4px solid var(--gold); border-radius: 14px; background: var(--cream); min-width: 0; }
+  .bearer .pic { width: 6.5rem; height: 6.5rem; border-radius: 50%; object-fit: cover; object-position: top; background: var(--cream-2); box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--gold); margin-bottom: .8rem; }
+  .bearer .pic.none { display: grid; place-items: center; color: var(--maroon); font-size: 2rem; font-weight: 700; }
+  .bearer .role { color: var(--maroon); font-weight: 600; font-size: .92rem; }
+  .bearer .name { font-size: 1.15rem; font-weight: 650; line-height: 1.25; overflow-wrap: anywhere; }
+  .bearer .term { color: var(--ink-soft); font-size: .88rem; }
+  .bearers-past { margin-top: 2.5rem; border: 1px solid var(--line); border-radius: 12px; background: var(--cream); }
+  .bearers-past summary { cursor: pointer; padding: 1rem 1.2rem; font-weight: 600; color: var(--maroon); }
+  .past-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem 2rem; padding: 0 1.2rem 1.2rem; }
+  .past-list h4 { margin: 0 0 .3rem; font-size: .92rem; color: var(--leaf); }
+  .past-list ul { margin: 0; padding-left: 1.1rem; color: var(--ink-soft); }
+  .bearers-note { margin-top: 1.5rem; color: var(--ink-soft); }
+
   footer.site { background: var(--maroon-3); color: #EBC9B0; font-size: .95rem; }
   footer.site .wrap { padding-top: 2rem; padding-bottom: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
   footer.site a { color: #fff; }
@@ -260,6 +279,7 @@
       <ul>
         <li><a href="#about">About us</a></li>
         <li><a href="#initiatives">Our initiatives</a></li>
+        <li><a href="#bearers">Office bearers</a></li>
         <li><a href="#events">Events</a></li>
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#contact">Contact us</a></li>
@@ -365,6 +385,16 @@
           </ul>
         </article>
       </div>
+    </div>
+  </section>
+
+  <section class="block bearers" id="bearers">
+    <div class="wrap">
+      <p class="eyebrow">Our leadership</p>
+      <h2>Office bearers</h2>
+      <p class="lede">The members who lead MPA today, and those who led it before.</p>
+      <div id="bearers-present"><p class="bearers-note">Loading office bearers…</p></div>
+      <div id="bearers-past"></div>
     </div>
   </section>
 
@@ -563,6 +593,67 @@
     if (e.key === 'ArrowLeft') show(cur - 1);
     if (e.key === 'ArrowRight') show(cur + 1);
   });
+
+  // Office bearers: public, read-only list from the member portal
+  (async () => {
+    const API = 'https://mms.madikaipravasi.org/api/public/office-bearers';
+    const presentEl = document.getElementById('bearers-present');
+    const pastEl = document.getElementById('bearers-past');
+    const GROUPS = [['office', 'Office bearers'], ['deputy', 'Deputy office bearers'], ['patron', 'Patrons']];
+    const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+    const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+    try {
+      const res = await fetch(API, { headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      const data = await res.json();
+      const present = Array.isArray(data.present) ? data.present : [];
+      const past = Array.isArray(data.past) ? data.past : [];
+      presentEl.textContent = '';
+      if (!present.length) presentEl.append(el('p', 'bearers-note', 'Office bearers will be listed here soon.'));
+      for (const [key, title] of GROUPS) {
+        const rows = present.filter((b) => b.group === key);
+        if (!rows.length) continue;
+        const group = el('div', 'bearer-group');
+        group.append(el('h3', null, title));
+        const grid = el('div', 'bearer-grid');
+        for (const b of rows) {
+          const card = el('article', 'bearer');
+          if (b.photo_url) {
+            const img = el('img', 'pic');
+            img.src = b.photo_url; img.alt = b.name; img.loading = 'lazy'; img.width = 104; img.height = 104;
+            img.addEventListener('error', () => { const f = el('span', 'pic none', initials(b.name)); f.setAttribute('aria-hidden', 'true'); img.replaceWith(f); });
+            card.append(img);
+          } else {
+            const f = el('span', 'pic none', initials(b.name)); f.setAttribute('aria-hidden', 'true'); card.append(f);
+          }
+          card.append(el('span', 'role', b.position_label), el('span', 'name', b.name));
+          if (b.years) card.append(el('span', 'term', b.years));
+          grid.append(card);
+        }
+        group.append(grid);
+        presentEl.append(group);
+      }
+      if (past.length) {
+        const det = el('details', 'bearers-past');
+        det.append(el('summary', null, `Past office bearers (${past.length})`));
+        const list = el('div', 'past-list');
+        const labels = [...new Set(past.map((b) => b.position_label))];
+        for (const label of labels) {
+          const col = el('div');
+          col.append(el('h4', null, label));
+          const ul = el('ul');
+          for (const b of past.filter((x) => x.position_label === label)) ul.append(el('li', null, b.name));
+          col.append(ul);
+          list.append(col);
+        }
+        det.append(list);
+        pastEl.append(det);
+      }
+    } catch (e) {
+      presentEl.textContent = '';
+      presentEl.append(el('p', 'bearers-note', 'Office bearers could not be loaded right now. Please check back later.'));
+    }
+  })();
 </script>
 </body>
 </html>
