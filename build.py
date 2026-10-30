@@ -16,7 +16,6 @@ NAV = [
     ('/about', 'About us'),
     ('/initiatives', 'Initiatives'),
     ('/office-bearers', 'Office bearers'),
-    ('/events', 'Events'),
     ('/gallery', 'Gallery'),
     ('/contact', 'Contact us'),
 ]
@@ -127,7 +126,6 @@ EXPLORE = [
     ('/about', 'About us', 'Who we are, since 2013.', '/photos/members-group.webp'),
     ('/initiatives', 'Our initiatives', 'Sneha Veedu, the palliative ambulance and welfare back home.', '/photos/ambulance-handover.webp'),
     ('/office-bearers', 'Office bearers', 'The members who lead MPA, present and past.', '/photos/general-body-2025.webp'),
-    ('/events', 'Events', 'Onam, Gramotsavam, music and drama.', '/photos/onam-2025-ghoshayathra.webp'),
     ('/gallery', 'Gallery', 'Moments from our events and work.', '/photos/pookalam.webp'),
     ('/contact', 'Contact us', 'Membership, events and how to reach us.', '/photos/gramotsavam-teams.webp'),
 ]
@@ -167,7 +165,6 @@ def build() -> None:
     for file, (path, sec_id, label) in {
         'initiatives.html': ('/initiatives', 'initiatives', 'Our initiatives'),
         'office-bearers.html': ('/office-bearers', 'bearers', 'Office bearers'),
-        'events.html': ('/events', 'events', 'Events'),
         'gallery.html': ('/gallery', 'gallery', 'Gallery'),
         'contact.html': ('/contact', 'contact', 'Contact us'),
     }.items():

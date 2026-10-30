@@ -1,5 +1,5 @@
   // Old one-page links (/#gallery etc.) go to the new pages
-  const OLD = { about: '/about', initiatives: '/initiatives', bearers: '/office-bearers', events: '/events', gallery: '/gallery', contact: '/contact', support: '/contact' };
+  const OLD = { about: '/about', initiatives: '/initiatives', bearers: '/office-bearers', events: '/', gallery: '/gallery', contact: '/contact', support: '/contact' };
   if ((location.pathname === '/' || location.pathname === '/index.html') && OLD[location.hash.slice(1)]) location.replace(OLD[location.hash.slice(1)]);
 
   document.getElementById('y').textContent = new Date().getFullYear();
