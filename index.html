@@ -253,11 +253,13 @@
   .bearer .role { color: var(--maroon); font-weight: 600; font-size: .92rem; }
   .bearer .name { font-size: 1.15rem; font-weight: 650; line-height: 1.25; overflow-wrap: anywhere; }
   .bearer .term { color: var(--ink-soft); font-size: .88rem; }
-  .bearers-past { margin-top: 2.5rem; border: 1px solid var(--line); border-radius: 12px; background: var(--cream); }
-  .bearers-past summary { cursor: pointer; padding: 1rem 1.2rem; font-weight: 600; color: var(--maroon); }
-  .past-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem 2rem; padding: 0 1.2rem 1.2rem; }
-  .past-list h4 { margin: 0 0 .3rem; font-size: .92rem; color: var(--leaf); }
-  .past-list ul { margin: 0; padding-left: 1.1rem; color: var(--ink-soft); }
+  .bearer-tabs { margin-top: 2rem; display: inline-flex; gap: .25rem; padding: .3rem; border-radius: 999px; background: var(--cream-2); border: 1px solid var(--line); }
+  .bearer-tabs button { font: inherit; font-weight: 600; font-size: .98rem; border: 0; cursor: pointer; padding: .55rem 1.2rem; border-radius: 999px; background: transparent; color: var(--ink-soft); }
+  .bearer-tabs button:hover { color: var(--maroon); }
+  .bearer-tabs button[aria-selected="true"] { background: var(--maroon); color: #fff; box-shadow: 0 3px 10px rgba(122,21,24,.25); }
+  .bearer-tabs button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .bearer-panel[hidden] { display: none; }
+  .bearer.past { border-top-color: var(--leaf); }
   .bearers-note { margin-top: 1.5rem; color: var(--ink-soft); }
 
   footer.site { background: var(--maroon-3); color: #EBC9B0; font-size: .95rem; }
@@ -393,8 +395,12 @@
       <p class="eyebrow">Our leadership</p>
       <h2>Office bearers</h2>
       <p class="lede">The members who lead MPA today, and those who led it before.</p>
-      <div id="bearers-present"><p class="bearers-note">Loading office bearers…</p></div>
-      <div id="bearers-past"></div>
+      <div class="bearer-tabs" role="tablist" aria-label="Office bearers">
+        <button type="button" role="tab" id="tab-present" aria-controls="bearers-present" aria-selected="true">Present</button>
+        <button type="button" role="tab" id="tab-past" aria-controls="bearers-past" aria-selected="false" tabindex="-1">Past</button>
+      </div>
+      <div class="bearer-panel" id="bearers-present" role="tabpanel" aria-labelledby="tab-present"><p class="bearers-note">Loading office bearers…</p></div>
+      <div class="bearer-panel" id="bearers-past" role="tabpanel" aria-labelledby="tab-past" hidden></div>
     </div>
   </section>
 
@@ -599,56 +605,58 @@
     const API = 'https://mms.madikaipravasi.org/api/public/office-bearers';
     const presentEl = document.getElementById('bearers-present');
     const pastEl = document.getElementById('bearers-past');
+    const tabs = [document.getElementById('tab-present'), document.getElementById('tab-past')];
+    const panels = [presentEl, pastEl];
+    function select(i, focus) {
+      tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; panels[j].hidden = i !== j; });
+      if (focus) tabs[i].focus();
+    }
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); select((i + 1) % 2, true); }
+      });
+    });
+
     const GROUPS = [['office', 'Office bearers'], ['deputy', 'Deputy office bearers'], ['patron', 'Patrons']];
     const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
     const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+    const fallback = (name) => { const f = el('span', 'pic none', initials(name)); f.setAttribute('aria-hidden', 'true'); return f; };
+    function card(b, past) {
+      const c = el('article', past ? 'bearer past' : 'bearer');
+      if (b.photo_url) {
+        const img = el('img', 'pic');
+        img.src = b.photo_url; img.alt = b.name; img.loading = 'lazy'; img.width = 104; img.height = 104;
+        img.addEventListener('error', () => img.replaceWith(fallback(b.name)));
+        c.append(img);
+      } else c.append(fallback(b.name));
+      c.append(el('span', 'role', b.position_label), el('span', 'name', b.name));
+      if (b.years) c.append(el('span', 'term', b.years));
+      return c;
+    }
+    function render(target, list, past, emptyText) {
+      target.textContent = '';
+      if (!list.length) { target.append(el('p', 'bearers-note', emptyText)); return; }
+      for (const [key, title] of GROUPS) {
+        const rows = list.filter((b) => b.group === key);
+        if (!rows.length) continue;
+        const group = el('div', 'bearer-group');
+        group.append(el('h3', null, past ? 'Past ' + title.toLowerCase() : title));
+        const grid = el('div', 'bearer-grid');
+        rows.forEach((b) => grid.append(card(b, past)));
+        group.append(grid);
+        target.append(group);
+      }
+    }
     try {
       const res = await fetch(API, { headers: { Accept: 'application/json' } });
       if (!res.ok) throw new Error(String(res.status));
       const data = await res.json();
       const present = Array.isArray(data.present) ? data.present : [];
       const past = Array.isArray(data.past) ? data.past : [];
-      presentEl.textContent = '';
-      if (!present.length) presentEl.append(el('p', 'bearers-note', 'Office bearers will be listed here soon.'));
-      for (const [key, title] of GROUPS) {
-        const rows = present.filter((b) => b.group === key);
-        if (!rows.length) continue;
-        const group = el('div', 'bearer-group');
-        group.append(el('h3', null, title));
-        const grid = el('div', 'bearer-grid');
-        for (const b of rows) {
-          const card = el('article', 'bearer');
-          if (b.photo_url) {
-            const img = el('img', 'pic');
-            img.src = b.photo_url; img.alt = b.name; img.loading = 'lazy'; img.width = 104; img.height = 104;
-            img.addEventListener('error', () => { const f = el('span', 'pic none', initials(b.name)); f.setAttribute('aria-hidden', 'true'); img.replaceWith(f); });
-            card.append(img);
-          } else {
-            const f = el('span', 'pic none', initials(b.name)); f.setAttribute('aria-hidden', 'true'); card.append(f);
-          }
-          card.append(el('span', 'role', b.position_label), el('span', 'name', b.name));
-          if (b.years) card.append(el('span', 'term', b.years));
-          grid.append(card);
-        }
-        group.append(grid);
-        presentEl.append(group);
-      }
-      if (past.length) {
-        const det = el('details', 'bearers-past');
-        det.append(el('summary', null, `Past office bearers (${past.length})`));
-        const list = el('div', 'past-list');
-        const labels = [...new Set(past.map((b) => b.position_label))];
-        for (const label of labels) {
-          const col = el('div');
-          col.append(el('h4', null, label));
-          const ul = el('ul');
-          for (const b of past.filter((x) => x.position_label === label)) ul.append(el('li', null, b.name));
-          col.append(ul);
-          list.append(col);
-        }
-        det.append(list);
-        pastEl.append(det);
-      }
+      render(presentEl, present, false, 'Office bearers will be listed here soon.');
+      render(pastEl, past, true, 'Past office bearers will be listed here soon.');
+      tabs[1].textContent = past.length ? `Past (${past.length})` : 'Past';
     } catch (e) {
       presentEl.textContent = '';
       presentEl.append(el('p', 'bearers-note', 'Office bearers could not be loaded right now. Please check back later.'));
