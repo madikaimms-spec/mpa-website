@@ -7,284 +7,34 @@
 <meta name="description" content="Madikai Pravasi Association (MPA) — a community for families from Madikai Panchayath, Kasaragod, living in the UAE. Member welfare, Sneha Veedu homes, palliative ambulance support back home and cultural events since 2013.">
 <meta property="og:title" content="Madikai Pravasi Association (MPA)">
 <meta property="og:description" content="Supporting our community, connecting our roots. Since 2013.">
+<meta property="og:image" content="/photos/hero-group.webp">
 <meta name="theme-color" content="#7A1518">
 <link rel="icon" href="/logo.webp" type="image/webp">
 <link rel="apple-touch-icon" href="/logo.webp">
-<meta property="og:image" content="/photos/hero-group.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wdth,wght@75..125,300..800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    /* Colours from the MPA Onam brochure: maroon headings, marigold gold, banana-leaf green, royal blue */
-    --maroon: #981B1E;
-    --maroon-2: #7A1518;
-    --maroon-3: #4E0D10;
-    --gold: #F6B30C;
-    --gold-2: #E8960A;
-    --gold-soft: #FCE7A1;
-    --leaf: #2F7A34;
-    --leaf-2: #396B2D;
-    --royal: #3346A0;
-    --cream: #FFF8E3;
-    --cream-2: #FDEFC4;
-    --paper: #FFFDF6;
-    --ink: #2B1F1A;
-    --ink-soft: #5E4E45;
-    --line: #EFDDB0;
-    --max: 72rem;
-    --font: 'Anek Malayalam', system-ui, sans-serif;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body {
-    margin: 0; font-family: var(--font); font-stretch: 100%;
-    font-size: 1.0625rem; line-height: 1.6; color: var(--ink);
-    background: var(--paper); -webkit-font-smoothing: antialiased;
-  }
-  img, svg { display: block; max-width: 100%; }
-  a { color: inherit; }
-  :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
-  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem; }
-  .skip { position: absolute; left: -999px; top: 0; background: var(--gold); color: var(--maroon-3); padding: .5rem 1rem; z-index: 99; }
-  .skip:focus { left: 1rem; top: 1rem; }
-
-  /* Kasavu border: the gold double stripe of a Kerala saree */
-  .kasavu {
-    height: 16px; background-color: var(--cream);
-    background-image:
-      linear-gradient(var(--gold), var(--gold)),
-      linear-gradient(var(--gold-2), var(--gold-2)),
-      linear-gradient(var(--maroon), var(--maroon));
-    background-size: 100% 6px, 100% 2px, 100% 3px;
-    background-position: 0 2px, 0 10px, 0 13px;
-    background-repeat: no-repeat;
-  }
-
-  /* Header */
-  header.site {
-    position: sticky; top: 0; z-index: 20;
-    background: rgba(122,21,24,.97); color: #fff;
-    backdrop-filter: saturate(1.4) blur(8px);
-    box-shadow: 0 2px 0 var(--gold);
-  }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4rem; }
-  .brand { display: flex; align-items: center; gap: .7rem; text-decoration: none; }
-  .brand-mark { width: 2.6rem; height: 2.6rem; border-radius: 50%; flex-shrink: 0; background: #fff; box-shadow: 0 0 0 2px var(--gold); }
-  .brand-name { font-weight: 600; line-height: 1.15; font-size: .95rem; }
-  .brand-name small { display: block; font-weight: 400; color: var(--gold-soft); font-size: .78rem; }
-  nav.main ul { list-style: none; margin: 0; padding: 0; display: flex; gap: .25rem; align-items: center; }
-  nav.main a { display: block; padding: .5rem .7rem; text-decoration: none; font-size: .95rem; color: #FBE3C8; border-radius: 6px; }
-  nav.main a:hover { color: #fff; background: rgba(255,255,255,.1); }
-  .menu-btn { display: none; background: none; border: 1px solid rgba(255,255,255,.4); color: #fff; border-radius: 6px; padding: .45rem .75rem; font: inherit; }
-  @media (max-width: 860px) {
-    .menu-btn { display: block; }
-    nav.main { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--maroon-2); border-top: 1px solid rgba(255,255,255,.12); }
-    nav.main.open { display: block; }
-    nav.main ul { flex-direction: column; align-items: stretch; padding: .5rem 1.25rem 1rem; }
-  }
-
-  /* Hero */
-  .hero { color: #fff; position: relative; overflow: hidden; background: var(--maroon-3); }
-  .hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
-  .hero::before {
-    content: ''; position: absolute; inset: 0; z-index: 1;
-    background:
-      radial-gradient(50rem 26rem at 90% 0%, rgba(246,179,12,.30), transparent 60%),
-      linear-gradient(100deg, rgba(78,13,16,.96) 0%, rgba(122,21,24,.88) 45%, rgba(122,21,24,.45) 100%);
-  }
-  .hero .wrap { position: relative; z-index: 2; padding-top: clamp(3rem, 8vw, 6rem); padding-bottom: clamp(3rem, 7vw, 5rem); }
-  .hero-logo {
-    width: clamp(4.5rem, 10vw, 6rem); height: auto; aspect-ratio: 1; border-radius: 50%;
-    background: #fff; box-shadow: 0 0 0 3px #fff, 0 0 0 6px var(--gold), 0 10px 30px rgba(0,0,0,.3); margin: 0 0 1.5rem;
-  }
-  .hero-ml { font-size: clamp(1.15rem, 2.6vw, 1.6rem); color: var(--gold); margin: 0 0 .75rem; font-weight: 600; line-height: 1.5; }
-  .hero h1 { margin: 0; font-weight: 750; font-stretch: 118%; font-size: clamp(2.6rem, 7.4vw, 5.6rem); line-height: .98; letter-spacing: -.015em; max-width: 14ch; }
-  .hero .tag { margin: 1.25rem 0 0; font-size: clamp(1.15rem, 2.2vw, 1.45rem); font-stretch: 90%; color: #FBE3C8; max-width: 34ch; }
-  .route { margin-top: clamp(2rem, 5vw, 3.25rem); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; max-width: 40rem; }
-  .route .place { font-stretch: 85%; line-height: 1.25; }
-  .route .place b { display: block; font-size: 1.15rem; font-stretch: 105%; }
-  .route .place span { color: var(--gold-soft); font-size: .9rem; }
-  .route .place.end { text-align: right; }
-  .route svg { width: 100%; height: 28px; overflow: visible; }
-  .route .path { stroke: var(--gold); stroke-width: 2; fill: none; stroke-dasharray: 5 6; }
-  .route .dot { fill: var(--gold); }
-  .route .dot.home { fill: #7BC67F; }
-  .hero-actions { margin-top: 2.25rem; display: flex; flex-wrap: wrap; gap: .75rem; }
-  .btn { display: inline-block; text-decoration: none; font-weight: 600; padding: .8rem 1.3rem; border-radius: 8px; font-size: 1rem; border: 2px solid transparent; transition: background .15s, border-color .15s, transform .15s; }
-  .btn:hover { transform: translateY(-1px); }
-  .btn.gold { background: var(--gold); color: var(--maroon-3); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
-  .btn.gold:hover { background: #FFC531; }
-  .btn.line { border-color: rgba(255,255,255,.6); color: #fff; }
-  .btn.line:hover { border-color: #fff; background: rgba(255,255,255,.08); }
-  .hero .since { position: absolute; z-index: 1; right: -0.04em; bottom: -0.2em; margin: 0; font-size: clamp(9rem, 26vw, 22rem); font-weight: 800; font-stretch: 75%; line-height: 1; color: rgba(246,179,12,.12); pointer-events: none; user-select: none; }
-  .hero + .kasavu { transform-origin: left; animation: weave 1.1s cubic-bezier(.2,.7,.2,1) .2s both; }
-  @keyframes weave { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  @media (prefers-reduced-motion: reduce) { .hero + .kasavu { animation: none; } }
-
-  /* Sections */
-  section.block { padding: clamp(3.5rem, 8vw, 6rem) 0; }
-  .block h2 { margin: 0 0 1rem; font-weight: 700; font-stretch: 112%; font-size: clamp(1.9rem, 4.2vw, 2.9rem); line-height: 1.08; color: var(--maroon); }
-  .eyebrow { margin: 0 0 .5rem; color: var(--leaf); font-weight: 600; font-size: .95rem; letter-spacing: .04em; text-transform: uppercase; }
-  .lede { font-size: clamp(1.1rem, 1.9vw, 1.3rem); color: var(--ink-soft); max-width: 60ch; margin: 0; }
-
-  /* About */
-  .about { background: var(--cream); }
-  .mission { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
-  .mission .lede + .lede { margin-top: 1rem; }
-  .mission .quote { margin: 0; font-size: clamp(1.35rem, 2.6vw, 1.85rem); line-height: 1.3; font-weight: 500; font-stretch: 95%; color: var(--ink); border-left: 4px solid var(--gold); padding-left: 1.25rem; }
-  .pillars { list-style: none; padding: 0; margin: 1.75rem 0 0; display: grid; gap: .9rem; }
-  .pillars li { display: grid; grid-template-columns: 1.6rem 1fr; gap: .6rem; color: var(--ink-soft); }
-  .pillars li::before { content: ''; width: .7rem; height: .7rem; margin-top: .55rem; background: var(--leaf); transform: rotate(45deg); }
-  .pillars b { color: var(--ink); font-weight: 600; }
-  .facts { margin: 2rem 0 0; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-  .facts div { background: var(--paper); padding: 1rem 1.1rem; }
-  .facts b { display: block; font-size: 1.7rem; font-stretch: 80%; font-weight: 700; color: var(--maroon); line-height: 1.1; }
-  .facts span { font-size: .9rem; color: var(--ink-soft); }
-  @media (max-width: 760px) { .mission { grid-template-columns: 1fr; } }
-
-  /* Initiatives */
-  .init-grid { margin-top: 2.5rem; display: grid; grid-template-columns: 1.35fr 1fr; gap: 1.25rem; }
-  .init { background: var(--paper); border-radius: 14px; padding: clamp(1.5rem, 3vw, 2.25rem); border: 1px solid var(--line); }
-  .init.feature { grid-row: span 2; background: linear-gradient(165deg, var(--maroon), var(--maroon-2)); color: #fff; border-color: var(--maroon-2); display: flex; flex-direction: column; }
-  .init:not(.feature) { border-top: 4px solid var(--gold); }
-  .init h3 { margin: .9rem 0 .5rem; font-size: 1.45rem; font-stretch: 108%; line-height: 1.2; font-weight: 650; }
-  .init p { margin: 0; color: var(--ink-soft); }
-  .init.feature p { color: #FBE3C8; }
-  .init .ml { font-size: .95rem; color: var(--gold); font-weight: 500; }
-  .init svg.icon { width: 44px; height: 44px; }
-  .init.feature .house-art { margin-top: auto; padding-top: 2rem; }
-  .init.feature .house-art svg { width: 100%; height: auto; max-height: 190px; }
-  .init .amb { margin: 1rem 0 0; border-radius: 10px; background: var(--cream); }
-  .init ul { margin: .75rem 0 0; padding-left: 1.1rem; color: var(--ink-soft); }
-  .init ul li { margin: .3rem 0; }
-  .init ul li::marker { color: var(--leaf); }
-  @media (max-width: 860px) { .init-grid { grid-template-columns: 1fr; } .init.feature { grid-row: auto; } }
-
-  /* Events */
-  .events-sec { background: var(--cream); }
-  .onam {
-    margin-top: 2.5rem; border-radius: 16px; overflow: hidden; color: #fff; position: relative;
-    background:
-      radial-gradient(30rem 18rem at 100% 0%, rgba(246,179,12,.45), transparent 60%),
-      radial-gradient(26rem 16rem at 0% 100%, rgba(47,122,52,.55), transparent 60%),
-      linear-gradient(135deg, var(--maroon-2), var(--maroon));
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); gap: 2rem; align-items: center;
-  }
-  .onam .tagline { margin: 0; color: var(--gold); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-size: .9rem; }
-  .onam h3 { margin: .3rem 0 .2rem; font-size: clamp(1.8rem, 4vw, 2.6rem); font-stretch: 112%; line-height: 1.05; }
-  .onam .ml { color: var(--gold-soft); font-size: 1.2rem; margin: 0 0 .9rem; }
-  .onam .when { margin: 0; color: #FBE3C8; }
-  .onam .when b { color: #fff; }
-  .arts { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
-  .arts li { background: rgba(255,255,255,.1); border: 1px solid rgba(246,179,12,.5); border-radius: 999px; padding: .35rem .85rem; font-size: .95rem; }
-  .arts li span { color: var(--gold-soft); font-size: .85rem; margin-left: .35rem; }
-  .arts-note { margin: .9rem 0 0; color: #FBE3C8; font-size: .92rem; }
-  @media (max-width: 760px) { .onam { grid-template-columns: 1fr; } }
-  .events { margin-top: 2rem; display: grid; gap: 0; border-top: 3px solid var(--gold); }
-  .event { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr) auto; gap: 1.5rem; align-items: baseline; padding: 1.6rem 0; border-bottom: 1px solid var(--line); }
-  .event h3 { margin: 0; font-size: clamp(1.4rem, 2.8vw, 1.9rem); font-weight: 700; font-stretch: 110%; color: var(--royal); line-height: 1.15; }
-  .event p { margin: 0; color: var(--ink-soft); }
-  .event .count { text-align: right; white-space: nowrap; }
-  .event .count b { display: block; font-size: 1.6rem; font-stretch: 80%; font-weight: 700; color: var(--maroon); line-height: 1.1; }
-  .event .count span { font-size: .85rem; color: var(--ink-soft); }
-  @media (max-width: 760px) {
-    .event { grid-template-columns: 1fr; gap: .4rem; }
-    .event .count { text-align: left; }
-    .event .count b, .event .count span { display: inline; }
-  }
-
-  /* Gallery */
-  .gallery-grid { margin-top: 2rem; columns: 4 15rem; column-gap: .75rem; }
-  .gallery-grid figure { margin: 0 0 .75rem; break-inside: avoid; position: relative; border-radius: 10px; overflow: hidden; background: var(--cream-2); }
-  .gallery-grid button { all: unset; display: block; cursor: zoom-in; width: 100%; }
-  .gallery-grid button:focus-visible { outline: 3px solid var(--gold); outline-offset: -3px; }
-  .gallery-grid img { width: 100%; height: auto; transition: transform .35s ease; }
-  .gallery-grid figure:hover img { transform: scale(1.03); }
-  .gallery-grid figcaption {
-    position: absolute; left: 0; right: 0; bottom: 0; padding: 1.6rem .75rem .55rem;
-    background: linear-gradient(transparent, rgba(43,15,12,.85)); color: #fff; font-size: .88rem; line-height: 1.3; pointer-events: none;
-  }
-  .lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(30,8,8,.94); display: none; align-items: center; justify-content: center; padding: 3.5rem 1rem 1rem; }
-  .lightbox.open { display: flex; }
-  .lightbox figure { margin: 0; max-width: min(64rem, 100%); }
-  .lightbox img { max-height: 78vh; width: auto; margin: 0 auto; border-radius: 8px; box-shadow: 0 0 0 3px var(--gold); }
-  .lightbox figcaption { color: #FBE3C8; text-align: center; margin-top: .75rem; }
-  .lb-btn { position: absolute; background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.3); border-radius: 8px; font: inherit; font-size: 1.1rem; padding: .45rem .8rem; cursor: pointer; }
-  .lb-btn:hover { background: rgba(255,255,255,.2); }
-  .lb-close { top: .75rem; right: .75rem; }
-  .lb-prev { left: .75rem; top: 50%; transform: translateY(-50%); }
-  .lb-next { right: .75rem; top: 50%; transform: translateY(-50%); }
-  @media (max-width: 600px) { .lb-prev, .lb-next { top: auto; bottom: .75rem; transform: none; } }
-
-  /* Join */
-  .join { color: #fff; background: radial-gradient(40rem 24rem at 100% 0%, rgba(246,179,12,.25), transparent 60%), radial-gradient(30rem 20rem at 0% 100%, rgba(47,122,52,.35), transparent 60%), linear-gradient(160deg, var(--maroon-3), var(--maroon-2)); }
-  .join h2 { color: #fff; }
-  .join .lede { color: #FBE3C8; }
-  .join-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-  .ways { display: grid; gap: .9rem; }
-  .way { display: grid; grid-template-columns: 2.2rem 1fr; gap: .9rem; align-items: start; padding: 1.1rem 1.2rem; border-radius: 12px; background: rgba(255,255,255,.07); border: 1px solid rgba(246,179,12,.3); }
-  .way svg { width: 28px; height: 28px; margin-top: .15rem; }
-  .way b { display: block; font-size: 1.1rem; }
-  .way span { color: #F2D3B8; font-size: .97rem; }
-  .join .btn.gold { margin-top: 1.75rem; }
-  @media (max-width: 760px) { .join-grid { grid-template-columns: 1fr; } }
-
-  /* Contact */
-  .contact-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 2rem; }
-  .contact-card { padding: 1.4rem; border: 1px solid var(--line); border-top: 4px solid var(--leaf); border-radius: 12px; background: var(--paper); }
-  .contact-card h3 { margin: 0 0 .35rem; font-size: 1.05rem; color: var(--maroon); font-weight: 650; }
-  .contact-card p { margin: 0; color: var(--ink-soft); }
-  .contact-card a { color: var(--royal); font-weight: 600; }
-  .contact-card .reg { margin-top: .5rem; font-size: .92rem; font-weight: 600; color: var(--maroon); }
-  @media (max-width: 760px) { .contact-grid { grid-template-columns: 1fr; } }
-
-
-  /* Office bearers (read-only feed from the member portal) */
-  .bearers { background: var(--paper); }
-  .bearer-group { margin-top: 2.25rem; }
-  .bearer-group h3 { margin: 0 0 1rem; font-size: 1rem; font-weight: 600; color: var(--leaf); letter-spacing: .04em; text-transform: uppercase; }
-  .bearer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); gap: 1rem; }
-  .bearer { display: flex; flex-direction: column; align-items: center; text-align: center; gap: .2rem; padding: 1.4rem 1rem 1.2rem; border: 1px solid var(--line); border-top: 4px solid var(--gold); border-radius: 14px; background: var(--cream); min-width: 0; }
-  .bearer .pic { width: 6.5rem; height: 6.5rem; border-radius: 50%; object-fit: cover; object-position: top; background: var(--cream-2); box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--gold); margin-bottom: .8rem; }
-  .bearer .pic.none { display: grid; place-items: center; color: var(--maroon); font-size: 2rem; font-weight: 700; }
-  .bearer .role { color: var(--maroon); font-weight: 600; font-size: .92rem; }
-  .bearer .name { font-size: 1.15rem; font-weight: 650; line-height: 1.25; overflow-wrap: anywhere; }
-  .bearer .term { color: var(--ink-soft); font-size: .88rem; }
-  .bearer-tabs { margin-top: 2rem; display: inline-flex; gap: .25rem; padding: .3rem; border-radius: 999px; background: var(--cream-2); border: 1px solid var(--line); }
-  .bearer-tabs button { font: inherit; font-weight: 600; font-size: .98rem; border: 0; cursor: pointer; padding: .55rem 1.2rem; border-radius: 999px; background: transparent; color: var(--ink-soft); }
-  .bearer-tabs button:hover { color: var(--maroon); }
-  .bearer-tabs button[aria-selected="true"] { background: var(--maroon); color: #fff; box-shadow: 0 3px 10px rgba(122,21,24,.25); }
-  .bearer-tabs button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-  .bearer-panel[hidden] { display: none; }
-  .bearer.past { border-top-color: var(--leaf); }
-  .bearers-note { margin-top: 1.5rem; color: var(--ink-soft); }
-
-  footer.site { background: var(--maroon-3); color: #EBC9B0; font-size: .95rem; }
-  footer.site .wrap { padding-top: 2rem; padding-bottom: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
-  footer.site a { color: #fff; }
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="site">
   <div class="wrap bar">
-    <a class="brand" href="#top" aria-label="Madikai Pravasi Association, home">
+    <a class="brand" href="/" aria-label="Madikai Pravasi Association, home">
       <img class="brand-mark" src="/logo.webp" alt="" width="96" height="96">
       <span class="brand-name">Madikai Pravasi Association<small>Kasaragod · UAE</small></span>
     </a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="main" id="nav" aria-label="Main">
       <ul>
-        <li><a href="#about">About us</a></li>
-        <li><a href="#initiatives">Our initiatives</a></li>
-        <li><a href="#bearers">Office bearers</a></li>
-        <li><a href="#events">Events</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contact us</a></li>
+        <li><a href="/" aria-current="page">Home</a></li>
+        <li><a href="/about">About us</a></li>
+        <li><a href="/initiatives">Initiatives</a></li>
+        <li><a href="/office-bearers">Office bearers</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/gallery">Gallery</a></li>
+        <li><a href="/contact">Contact us</a></li>
       </ul>
     </nav>
   </div>
@@ -310,8 +60,8 @@
       </div>
 
       <div class="hero-actions">
-        <a class="btn gold" href="#about">Learn more about MPA</a>
-        <a class="btn line" href="#gallery">See our gallery</a>
+        <a class="btn gold" href="/about">Learn more about MPA</a>
+        <a class="btn line" href="/gallery">See our gallery</a>
       </div>
     </div>
     <p class="since" aria-hidden="true">2013</p>
@@ -342,164 +92,35 @@
     </div>
   </section>
 
-  <section class="block" id="initiatives">
+  <section class="block explore" id="explore">
     <div class="wrap">
-      <p class="eyebrow">Back home in Kerala</p>
-      <h2>Our initiatives and impact</h2>
-      <p class="lede">Together, our members take part in welfare work for families back home in Madikai and Kerala.</p>
-
-      <div class="init-grid">
-        <article class="init feature">
-          <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#F6B30C" stroke-width="2.5" stroke-linejoin="round" aria-hidden="true"><path d="M6 22 24 7l18 15"/><path d="M11 19v21h26V19"/><path d="M20 40V28h8v12"/></svg>
-          <h3>Sneha Veedu <span class="ml" lang="ml">സ്നേഹവീട്</span></h3>
-          <p>A home for families in need. MPA builds houses and hands them over to the families who need them most. At the recent key handover ceremony for completed houses, we were joined by dignitaries including Hon. Kerala Minister Kadannappalli Ramachandran — a sign of the trust the project has earned in our community.</p>
-          <div class="house-art" aria-hidden="true">
-            <svg viewBox="0 0 400 170">
-              <g fill="none" stroke="#F6B30C" stroke-width="2">
-                <path d="M30 160h340" />
-                <path d="M70 160V95l55-40 55 40v65" /><path d="M110 160v-34h30v34" /><path d="M60 102l65-50 65 50" />
-                <path d="M220 160V105l45-32 45 32v55" /><path d="M253 160v-27h24v27" /><path d="M212 112l53-40 53 40" />
-              </g>
-              <g fill="none" stroke="#7BC67F" stroke-width="2">
-                <path d="M345 160V70" /><path d="M345 72c-18-6-30-2-38 8M345 72c16-10 30-8 38 2M345 72c-6-18-18-24-30-24M345 72c4-18 16-26 30-24" />
-                <path d="M30 160c4-14 10-20 18-22" />
-              </g>
-            </svg>
-          </div>
-        </article>
-
-        <article class="init">
-          <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#981B1E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 33V16h22v17"/><path d="M26 21h9l7 8v4H26"/><circle cx="12" cy="35" r="4"/><circle cx="34" cy="35" r="4"/><path d="M15 20v8M11 24h8"/></svg>
-          <h3>Palliative ambulance service</h3>
-          <p>MPA supports a dedicated palliative ambulance service back home, so patients in need get comfort, dignity and timely transport to care.</p>
-          <img class="amb" src="/photos/ambulance.webp" alt="The Madikai palliative care ambulance supported by MPA" loading="lazy">
-        </article>
-
-        <article class="init">
-          <svg class="icon" viewBox="0 0 48 48" fill="none" stroke="#981B1E" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M24 40S7 30 7 18a8.5 8.5 0 0 1 17-2 8.5 8.5 0 0 1 17 2c0 12-17 22-17 22Z"/></svg>
-          <h3>Community welfare and aid</h3>
-          <p>Beyond housing and medical transport, our members are involved in:</p>
-          <ul>
-            <li>Donating palliative care ambulances in Kerala</li>
-            <li>Educational and medical help for families in need in Kerala</li>
-            <li>Relief support at home, including our contribution for Wayanad</li>
-            <li>Welfare support for our members and their families</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="block bearers" id="bearers">
-    <div class="wrap">
-      <p class="eyebrow">Our leadership</p>
-      <h2>Office bearers</h2>
-      <p class="lede">The members who lead MPA today, and those who led it before.</p>
-      <div class="bearer-tabs" role="tablist" aria-label="Office bearers">
-        <button type="button" role="tab" id="tab-present" aria-controls="bearers-present" aria-selected="true">Present</button>
-        <button type="button" role="tab" id="tab-past" aria-controls="bearers-past" aria-selected="false" tabindex="-1">Past</button>
-      </div>
-      <div class="bearer-panel" id="bearers-present" role="tabpanel" aria-labelledby="tab-present"><p class="bearers-note">Loading office bearers…</p></div>
-      <div class="bearer-panel" id="bearers-past" role="tabpanel" aria-labelledby="tab-past" hidden></div>
-    </div>
-  </section>
-
-  <section class="block events-sec" id="events">
-    <div class="wrap">
-      <p class="eyebrow">Culture and heritage</p>
-      <h2>Celebrating together</h2>
-      <p class="lede">MPA has hosted acclaimed cultural events that bring our community together in their thousands.</p>
-
-      <article class="onam">
-        <div>
-          <p class="tagline">Onam celebration 2025</p>
-          <h3>Poovepoli</h3>
-          <p class="ml" lang="ml">പൂവേ പൊലി · മടിക്കൈ ഓണം 2025</p>
-          <p class="when"><b>2 November 2025</b> · Central Mall, Sharjah</p>
-        </div>
-        <div>
-          <ul class="arts">
-            <li>Onasadya<span lang="ml">ഓണസദ്യ</span></li>
-            <li>Ghoshayathra<span lang="ml">ഘോഷയാത്ര</span></li>
-            <li>Thiruvathira<span lang="ml">തിരുവാതിര</span></li>
-            <li>Oppana<span lang="ml">ഒപ്പന</span></li>
-            <li>Margamkali<span lang="ml">മാർഗംകളി</span></li>
-            <li>Kaikottikali<span lang="ml">കൈകൊട്ടിക്കളി</span></li>
-            <li>Purakkali<span lang="ml">പൂരക്കളി</span></li>
-            <li>Ganamela<span lang="ml">ഗാനമേള</span></li>
-          </ul>
-          <p class="arts-note">And many more art programmes by our members and families.</p>
-        </div>
-      </article>
-
-      <div class="events">
-        <article class="event">
-          <h3>Brahmakamalam</h3>
-          <p>A prestigious musical evening led by Padma Bhushan Dr. K.J. Yesudas and Vijay Yesudas.</p>
-          <div class="count"><b>1,500+</b> <span>attended</span></div>
-        </article>
-        <article class="event">
-          <h3>Indriyangal Parayunnath</h3>
-          <p>A powerful, emotional stage drama.</p>
-          <div class="count"><b>1,500+</b> <span>attended</span></div>
-        </article>
-        <article class="event">
-          <h3>Gramotsavam seasons</h3>
-          <p>Our sports and rural heritage festival, promoting wellness and traditional games among the expat community.</p>
-          <div class="count"><b>Every season</b> <span>for all ages</span></div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="block" id="gallery">
-    <div class="wrap">
-      <p class="eyebrow">Gallery</p>
-      <h2>Moments from MPA</h2>
-      <p class="lede">Onam, Gramotsavam, cultural evenings and our work back home. Tap a photo to see it larger.</p>
-      <div class="gallery-grid">
-        <figure><button type="button" aria-label="View larger: Members and families with the Ghoshayathra banner at Onam 2025"><img src="/photos/onam-2025-ghoshayathra.webp" alt="Members and families with the Ghoshayathra banner at Onam 2025" width="1200" height="800" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Onam 2024 procession"><img src="/photos/onam-2024-procession.webp" alt="Onam 2024 procession" width="1200" height="801" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Members and families group photo"><img src="/photos/members-group.webp" alt="Members and families group photo" width="1200" height="541" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Annual general body meeting 2025"><img src="/photos/general-body-2025.webp" alt="Annual general body meeting 2025" width="1200" height="676" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Children at the Vanitha-Balavedi general body 2025"><img src="/photos/balavedi-2025.webp" alt="Children at the Vanitha-Balavedi general body 2025" width="1200" height="900" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Gramotsavam participants group photo"><img src="/photos/gramotsavam-group.webp" alt="Gramotsavam participants group photo" width="1200" height="800" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Gramotsavam teams lined up for the march-past"><img src="/photos/gramotsavam-teams.webp" alt="Gramotsavam teams lined up for the march-past" width="1200" height="800" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Award presentation at Gramotsavam"><img src="/photos/gramotsavam-award.webp" alt="Award presentation at Gramotsavam" width="1200" height="800" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Members and families at an MPA celebration"><img src="/photos/members-families.webp" alt="Members and families at an MPA celebration" width="1000" height="398" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Members in traditional Kerala attire"><img src="/photos/kerala-attire.webp" alt="Members in traditional Kerala attire" width="764" height="460" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Gramotsavam march-past"><img src="/photos/gramotsavam-march.webp" alt="Gramotsavam march-past" width="674" height="464" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Thiruvathira dance"><img src="/photos/thiruvathira.webp" alt="Thiruvathira dance" width="438" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Team jersey launch"><img src="/photos/jersey-launch.webp" alt="Team jersey launch" width="762" height="588" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: MPA pookalam (flower carpet)"><img src="/photos/pookalam.webp" alt="MPA pookalam (flower carpet)" width="438" height="352" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Gramotsavam opening ceremony"><img src="/photos/gramotsavam-opening.webp" alt="Gramotsavam opening ceremony" width="676" height="576" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Traditional performers"><img src="/photos/traditional-performers.webp" alt="Traditional performers" width="644" height="574" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Palliative ambulance handover"><img src="/photos/ambulance-handover.webp" alt="Palliative ambulance handover" width="436" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: MPA contribution for Wayanad"><img src="/photos/wayanad.webp" alt="MPA contribution for Wayanad" width="436" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: A ceremony back home in Madikai"><img src="/photos/ceremony-home.webp" alt="A ceremony back home in Madikai" width="436" height="352" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Our young players"><img src="/photos/young-players.webp" alt="Our young players" width="436" height="382" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Football at Gramotsavam"><img src="/photos/football.webp" alt="Football at Gramotsavam" width="432" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Sports teams"><img src="/photos/sports-team.webp" alt="Sports teams" width="454" height="352" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Team photo"><img src="/photos/team-group.webp" alt="Team photo" width="438" height="352" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Gramotsavam team"><img src="/photos/team-photo.webp" alt="Gramotsavam team" width="432" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Gramotsavam stage"><img src="/photos/gramotsavam-stage.webp" alt="Gramotsavam stage" width="438" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Community meal"><img src="/photos/community-meal.webp" alt="Community meal" width="438" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Traditional martial arts performance"><img src="/photos/martial-arts.webp" alt="Traditional martial arts performance" width="438" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Performers on stage"><img src="/photos/performers-stage.webp" alt="Performers on stage" width="432" height="382" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Concert evening"><img src="/photos/concert-crowd.webp" alt="Concert evening" width="436" height="382" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: A full house"><img src="/photos/audience.webp" alt="A full house" width="438" height="382" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Live music"><img src="/photos/singer.webp" alt="Live music" width="454" height="378" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Cultural programme"><img src="/photos/cultural-stage.webp" alt="Cultural programme" width="454" height="382" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Onam programme on stage"><img src="/photos/onam-stage.webp" alt="Onam programme on stage" width="454" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Award presentation"><img src="/photos/award.webp" alt="Award presentation" width="454" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Honouring our guests"><img src="/photos/honouring-guests.webp" alt="Honouring our guests" width="438" height="382" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Stage programme"><img src="/photos/stage-programme.webp" alt="Stage programme" width="432" height="382" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Jersey presentation"><img src="/photos/jersey-presentation.webp" alt="Jersey presentation" width="432" height="378" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Felicitation on stage"><img src="/photos/felicitation.webp" alt="Felicitation on stage" width="432" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Welcoming a guest"><img src="/photos/welcome-guest.webp" alt="Welcoming a guest" width="436" height="380" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Presentation to a guest"><img src="/photos/presentation.webp" alt="Presentation to a guest" width="438" height="382" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Address to members"><img src="/photos/address.webp" alt="Address to members" width="438" height="378" loading="lazy" decoding="async"></button></figure>
-        <figure><button type="button" aria-label="View larger: Members meeting"><img src="/photos/meeting.webp" alt="Members meeting" width="438" height="380" loading="lazy" decoding="async"></button></figure>
+      <p class="eyebrow">Explore</p>
+      <h2>Find your way around</h2>
+      <div class="tiles">
+        <a class="tile" href="/about">
+          <img src="/photos/members-group.webp" alt="" loading="lazy" decoding="async">
+          <span class="tile-text"><b>About us</b><span>Who we are, since 2013.</span></span>
+        </a>
+        <a class="tile" href="/initiatives">
+          <img src="/photos/ambulance-handover.webp" alt="" loading="lazy" decoding="async">
+          <span class="tile-text"><b>Our initiatives</b><span>Sneha Veedu, the palliative ambulance and welfare back home.</span></span>
+        </a>
+        <a class="tile" href="/office-bearers">
+          <img src="/photos/general-body-2025.webp" alt="" loading="lazy" decoding="async">
+          <span class="tile-text"><b>Office bearers</b><span>The members who lead MPA, present and past.</span></span>
+        </a>
+        <a class="tile" href="/events">
+          <img src="/photos/onam-2025-ghoshayathra.webp" alt="" loading="lazy" decoding="async">
+          <span class="tile-text"><b>Events</b><span>Onam, Gramotsavam, music and drama.</span></span>
+        </a>
+        <a class="tile" href="/gallery">
+          <img src="/photos/pookalam.webp" alt="" loading="lazy" decoding="async">
+          <span class="tile-text"><b>Gallery</b><span>Moments from our events and work.</span></span>
+        </a>
+        <a class="tile" href="/contact">
+          <img src="/photos/gramotsavam-teams.webp" alt="" loading="lazy" decoding="async">
+          <span class="tile-text"><b>Contact us</b><span>Membership, events and how to reach us.</span></span>
+        </a>
       </div>
     </div>
   </section>
@@ -523,145 +144,18 @@
       </div>
     </div>
   </section>
-
-  <section class="block" id="contact">
-    <div class="wrap">
-      <h2>Contact us</h2>
-      <p class="lede">Reach out to MPA about membership, our initiatives or upcoming events.</p>
-      <div class="contact-grid">
-        <div class="contact-card">
-          <h3>In the UAE</h3>
-          <p>Families from Madikai living across the United Arab Emirates</p>
-        </div>
-        <div class="contact-card">
-          <h3>Registered in Kerala</h3>
-          <p>Madikai, Kasaragod,<br>Kerala-India Pin: 671314</p>
-          <p class="reg">Reg No: KSR/124/2026</p>
-        </div>
-        <div class="contact-card">
-          <h3>Members</h3>
-          <p>Already a member? <a href="https://mms.madikaipravasi.org/login">Sign in to the member portal</a></p>
-        </div>
-      </div>
-    </div>
-  </section>
 </main>
-
-<div class="lightbox" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
-  <button class="lb-btn lb-close" type="button" aria-label="Close">✕</button>
-  <button class="lb-btn lb-prev" type="button" aria-label="Previous photo">‹</button>
-  <figure><img id="lb-img" alt=""></figure>
-  <button class="lb-btn lb-next" type="button" aria-label="Next photo">›</button>
-</div>
 
 <div class="kasavu" aria-hidden="true"></div>
 <footer class="site">
   <div class="wrap">
     <span>© <span id="y">2026</span> Madikai Pravasi Association (MPA). Established 2013. Reg No: KSR/124/2026</span>
-    <span><a href="#top">Back to top</a></span>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="/about">About</a><a href="/office-bearers">Office bearers</a><a href="/gallery">Gallery</a><a href="/contact">Contact</a>
+    </nav>
   </div>
 </footer>
 
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
-  const btn = document.querySelector('.menu-btn');
-  const nav = document.getElementById('nav');
-  btn.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    btn.setAttribute('aria-expanded', String(open));
-    btn.textContent = open ? 'Close' : 'Menu';
-  });
-  nav.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
-    nav.classList.remove('open');
-    btn.setAttribute('aria-expanded', 'false');
-    btn.textContent = 'Menu';
-  }));
-
-  // Gallery lightbox
-  const items = [...document.querySelectorAll('.gallery-grid button')];
-  const lb = document.getElementById('lb'), lbImg = document.getElementById('lb-img');
-  let cur = 0, opener = null;
-  function show(i) {
-    cur = (i + items.length) % items.length;
-    const img = items[cur].querySelector('img');
-    lbImg.src = img.src; lbImg.alt = img.alt;
-  }
-  function openLb(i) { opener = items[i]; show(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; lb.querySelector('.lb-close').focus(); }
-  function closeLb() { lb.classList.remove('open'); document.body.style.overflow = ''; if (opener) opener.focus(); }
-  items.forEach((b, i) => b.addEventListener('click', () => openLb(i)));
-  lb.querySelector('.lb-close').addEventListener('click', closeLb);
-  lb.querySelector('.lb-prev').addEventListener('click', () => show(cur - 1));
-  lb.querySelector('.lb-next').addEventListener('click', () => show(cur + 1));
-  lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
-  document.addEventListener('keydown', (e) => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLb();
-    if (e.key === 'ArrowLeft') show(cur - 1);
-    if (e.key === 'ArrowRight') show(cur + 1);
-  });
-
-  // Office bearers: public, read-only list from the member portal
-  (async () => {
-    const API = 'https://mms.madikaipravasi.org/api/public/office-bearers';
-    const presentEl = document.getElementById('bearers-present');
-    const pastEl = document.getElementById('bearers-past');
-    const tabs = [document.getElementById('tab-present'), document.getElementById('tab-past')];
-    const panels = [presentEl, pastEl];
-    function select(i, focus) {
-      tabs.forEach((t, j) => { t.setAttribute('aria-selected', String(i === j)); t.tabIndex = i === j ? 0 : -1; panels[j].hidden = i !== j; });
-      if (focus) tabs[i].focus();
-    }
-    tabs.forEach((t, i) => {
-      t.addEventListener('click', () => select(i));
-      t.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); select((i + 1) % 2, true); }
-      });
-    });
-
-    const GROUPS = [['office', 'Office bearers'], ['deputy', 'Deputy office bearers'], ['patron', 'Patrons']];
-    const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-    const initials = (name) => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
-    const fallback = (name) => { const f = el('span', 'pic none', initials(name)); f.setAttribute('aria-hidden', 'true'); return f; };
-    function card(b, past) {
-      const c = el('article', past ? 'bearer past' : 'bearer');
-      if (b.photo_url) {
-        const img = el('img', 'pic');
-        img.src = b.photo_url; img.alt = b.name; img.loading = 'lazy'; img.width = 104; img.height = 104;
-        img.addEventListener('error', () => img.replaceWith(fallback(b.name)));
-        c.append(img);
-      } else c.append(fallback(b.name));
-      c.append(el('span', 'role', b.position_label), el('span', 'name', b.name));
-      if (b.years) c.append(el('span', 'term', b.years));
-      return c;
-    }
-    function render(target, list, past, emptyText) {
-      target.textContent = '';
-      if (!list.length) { target.append(el('p', 'bearers-note', emptyText)); return; }
-      for (const [key, title] of GROUPS) {
-        const rows = list.filter((b) => b.group === key);
-        if (!rows.length) continue;
-        const group = el('div', 'bearer-group');
-        group.append(el('h3', null, past ? 'Past ' + title.toLowerCase() : title));
-        const grid = el('div', 'bearer-grid');
-        rows.forEach((b) => grid.append(card(b, past)));
-        group.append(grid);
-        target.append(group);
-      }
-    }
-    try {
-      const res = await fetch(API, { headers: { Accept: 'application/json' } });
-      if (!res.ok) throw new Error(String(res.status));
-      const data = await res.json();
-      const present = Array.isArray(data.present) ? data.present : [];
-      const past = Array.isArray(data.past) ? data.past : [];
-      render(presentEl, present, false, 'Office bearers will be listed here soon.');
-      render(pastEl, past, true, 'Past office bearers will be listed here soon.');
-      tabs[1].textContent = past.length ? `Past (${past.length})` : 'Past';
-    } catch (e) {
-      presentEl.textContent = '';
-      presentEl.append(el('p', 'bearers-note', 'Office bearers could not be loaded right now. Please check back later.'));
-    }
-  })();
-</script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
