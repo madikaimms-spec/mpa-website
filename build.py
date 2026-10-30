@@ -4,6 +4,8 @@
 Edit files in src/ (sections, site.css, site.js), then run:  python3 build.py
 It writes the page .html files at the repo root and assets/site.css + assets/site.js.
 """
+import html as htmllib
+import json
 import re
 from pathlib import Path
 
@@ -67,6 +69,7 @@ def header(active: str) -> str:
       <img class="brand-mark" src="/logo.webp" alt="" width="96" height="96">
       <span class="brand-name">Madikai Pravasi Association<small>Kasaragod · UAE</small></span>
     </a>
+    <a class="lang-switch" href="@@ALT@@" hreflang="ml" lang="ml">മലയാളം</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="main" id="nav" aria-label="Main">
       <ul>
@@ -109,9 +112,11 @@ def page(path: str, title: str, main: str, extra: str = '', og_image: str = '/ph
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wdth,wght@75..125,300..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="alternate" hreflang="en" href="{path}">
+<link rel="alternate" hreflang="ml" href="{ml_path(path)}">
 </head>
 <body>
-{header(path)}
+{header(path).replace('@@ALT@@', ml_path(path))}
 <main id="main">
 {main}</main>
 {extra}
@@ -151,6 +156,67 @@ def explore() -> str:
 '''
 
 
+PAGE_PATHS = ('/about', '/initiatives', '/office-bearers', '/gallery', '/contact')
+ML = json.loads((SRC / 'ml.json').read_text())
+
+
+def ml_path(path: str) -> str:
+    return '/ml' if path == '/' else f'/ml{path}'
+
+
+def tr(text: str, missing: set) -> str:
+    """Translate one English string (whitespace-normalised) to Malayalam."""
+    key = ' '.join(text.split())
+    if not key or not any(c.isalpha() for c in key) or any('\u0d00' <= c <= '\u0d7f' for c in key):
+        return text
+    if key.startswith('View larger: ') and key[13:] in ML:
+        out = 'വലുതായി കാണുക: ' + ML[key[13:]]
+    elif key in ML:
+        out = ML[key]
+    elif ' · ' in key and all(p in ML for p in key.split(' · ')):
+        out = ' · '.join(ML[p] for p in key.split(' · '))
+    else:
+        missing.add(key)
+        return text
+    lead = text[: len(text) - len(text.lstrip())]
+    trail = text[len(text.rstrip()):]
+    return lead + out + trail
+
+
+def to_malayalam(doc: str, path: str, missing: set) -> str:
+    """Make the Malayalam copy of a built English page."""
+    # Translate visible text, leaving <script> and <style> alone.
+    parts = re.split(r'(<script\b.*?</script>|<style\b.*?</style>|<[^>]+>)', doc, flags=re.S)
+    for i, chunk in enumerate(parts):
+        if not chunk or chunk.startswith('<'):
+            continue
+        parts[i] = tr(htmllib.unescape(chunk), missing)
+    doc = ''.join(parts)
+
+    # Translate readable attributes.
+    def attr(m: re.Match) -> str:
+        name, value = m.group(1), m.group(2)
+        if name == 'content' and not re.search(r'[A-Za-z]{3,} ', htmllib.unescape(value)):
+            return m.group(0)
+        return f'{name}="{htmllib.escape(tr(htmllib.unescape(value), missing), quote=True)}"'
+    doc = re.sub(r'\b(alt|aria-label|title|content)="([^"]*)"', attr, doc)
+
+    # Internal page links point to the Malayalam pages.
+    doc = doc.replace('<html lang="en">', '<html lang="ml">', 1)
+    doc = doc.replace('href="/"', 'href="/ml"')
+    for p in PAGE_PATHS:
+        doc = doc.replace(f'href="{p}"', f'href="/ml{p}"')
+    # Keep the alternate-language links correct.
+    doc = doc.replace(f'<link rel="alternate" hreflang="en" href="{ml_path(path)}">', f'<link rel="alternate" hreflang="en" href="{path}">')
+    # Language switch goes back to English.
+    doc = re.sub(r'<a class="lang-switch" href="[^"]*" hreflang="ml" lang="ml">മലയാളം</a>',
+                 f'<a class="lang-switch" href="{path}" hreflang="en" lang="en">English</a>', doc)
+    # The hero shows the name in the other language under the logo; drop duplicate Malayalam labels.
+    doc = doc.replace('<p class="hero-ml" lang="ml">മടിക്കൈ പ്രവാസി അസോസിയേഷൻ</p>', '<p class="hero-ml" lang="en">Madikai Pravasi Association</p>')
+    doc = doc.replace(' <span class="ml" lang="ml">സ്നേഹവീട്</span>', '')
+    return doc
+
+
 def build() -> None:
     hero = part('top').replace('href="#about"', 'href="/about"').replace('href="#gallery"', 'href="/gallery"')
     about = part('about')
@@ -174,8 +240,16 @@ def build() -> None:
             main += '\n' + support
         pages[file] = (path, label, main, part('lightbox') if sec_id == 'gallery' else '')
 
+    missing: set = set()
+    (ROOT / 'ml').mkdir(exist_ok=True)
     for file, (path, title, main, extra) in pages.items():
-        (ROOT / file).write_text(page(path, title, main, extra))
+        doc = page(path, title, main, extra)
+        (ROOT / file).write_text(doc)
+        (ROOT / 'ml' / file).write_text(to_malayalam(doc, path, missing))
+    if missing:
+        print('Missing Malayalam for:')
+        for m in sorted(missing):
+            print('  -', m)
 
     (ROOT / 'assets').mkdir(exist_ok=True)
     (ROOT / 'assets' / 'site.css').write_text((SRC / 'site.css').read_text())
